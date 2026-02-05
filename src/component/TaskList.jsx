@@ -7,7 +7,7 @@ function TaskList({ tasks }) {
           <p>{task.description}</p>
 
           <div className="task-meta">
-            <span>Due : {task.dueDate}</span>
+            <span>Due : {task.date}</span>
             <span className="priority-badge priority-high">
               {task.priority}
             </span>
