@@ -22,7 +22,7 @@
       "description": "hello",
       "date": "2026-02-05",
       "priority": "Medium",
-      "completed": false
+      "completed": true
     }
   ]
 }

@@ -1,4 +1,4 @@
-function TaskList({ tasks, editingTask, deletingTask }) {
+function TaskList({ tasks, editingTask, deletingTask, hanldeCompleteTask }) {
   const handleEditClick = (task) => {
     editingTask(task);
   };
@@ -8,7 +8,10 @@ function TaskList({ tasks, editingTask, deletingTask }) {
   return (
     <div className="task-grid">
       {tasks.map((task) => (
-        <div className="task-card" style={{ position: "relative" }}>
+        <div
+          className={`task-card ${task.completed ? "completed" : ""}`}
+          style={{ position: "relative" }}
+        >
           <h3>{task.title}</h3>
           <p>{task.description}</p>
 
@@ -21,6 +24,7 @@ function TaskList({ tasks, editingTask, deletingTask }) {
           <div className="task-action">
             <button
               className="btn-icon"
+              disabled={task.completed}
               style={{ background: "#00d2ff" }}
               title="Edit Task"
               onClick={() => handleEditClick(task)}
@@ -31,11 +35,13 @@ function TaskList({ tasks, editingTask, deletingTask }) {
               className="btn-icon"
               style={{ background: "#00b894" }}
               title="Mark Complete"
+              onClick={() => hanldeCompleteTask(task.id)}
             >
-              ✔️
+              {task.completed ? "Undo" : "✔️"}
             </button>
             <button
               className="btn-icon"
+              disabled={task.completed}
               style={{ background: "#ff416c" }}
               title="Delete Task"
               onClick={() => handleDeleteClick(task.id)}
