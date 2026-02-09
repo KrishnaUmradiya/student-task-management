@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const TaskForm = ({ addTask }) => {
+const TaskForm = ({ addTask, updateTask, editingTask }) => {
   //declaration
   const [taskData, setTaskData] = useState({
     title: "",
@@ -10,6 +10,10 @@ const TaskForm = ({ addTask }) => {
     priority: "",
   });
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    setTaskData(editingTask);
+  }, [editingTask]);
 
   const handleInputChange = (e) => {
     setTaskData({
@@ -44,8 +48,11 @@ const TaskForm = ({ addTask }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      addTask(taskData);
-
+      if (editingTask) {
+        updateTask(taskData);
+      } else {
+        addTask(taskData);
+      }
       //localStorage.setItem("taskData", JSON.stringify(taskData));
       //alert("task are added");
     }
@@ -55,14 +62,16 @@ const TaskForm = ({ addTask }) => {
   return (
     <>
       <div className="add-task-card">
-        <h2 style={{ marginBottom: "15px" }}>Add New Task</h2>
+        <h2 style={{ marginBottom: "15px" }}>
+          {editingTask ? "Update" : "Add"} Task
+        </h2>
         <form>
           <div>
             <input
               type="text"
               placeholder="Task Title"
               name="title"
-              value={taskData.title}
+              value={taskData?.title}
               onChange={handleInputChange}
             />
             {errors.title && <span className="error-msg">{errors.title}</span>}
@@ -72,7 +81,7 @@ const TaskForm = ({ addTask }) => {
               placeholder="Description"
               rows="3"
               name="description"
-              value={taskData.description}
+              value={taskData?.description}
               onChange={handleInputChange}
             />
             {errors.description && (
@@ -84,7 +93,7 @@ const TaskForm = ({ addTask }) => {
               <input
                 type="date"
                 name="date"
-                value={taskData.date}
+                value={taskData?.date}
                 onChange={handleInputChange}
               />
               {errors.date && <span className="error-msg">{errors.date}</span>}
@@ -92,7 +101,7 @@ const TaskForm = ({ addTask }) => {
             <div style={{ flex: 1 }}>
               <select
                 name="priority"
-                value={taskData.priority}
+                value={taskData?.priority}
                 onChange={handleInputChange}
               >
                 <option value="Low">Low Priority</option>
@@ -114,7 +123,7 @@ const TaskForm = ({ addTask }) => {
               className="btn-primary"
               style={{ flex: 1 }}
             >
-              Add Task
+              {editingTask ? "Update" : "Add"} Task
             </button>
             <button
               type="buttton"
