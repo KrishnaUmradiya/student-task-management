@@ -48,7 +48,7 @@ const Dashboard = () => {
     try {
       await fetch(`http://localhost:3000/tasks/${updatedTask.id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application.json" },
         body: JSON.stringify(updatedTask),
       });
       setTasks(
@@ -64,6 +64,7 @@ const Dashboard = () => {
   const editingTask = (editingTask) => {
     //console.log(editTask);
     setEditTask(editingTask);
+    setShowForm(true)
   };
   const handleDeleteTask = async (id) => {
     try {
@@ -81,10 +82,10 @@ const Dashboard = () => {
     try {
       await fetch(`http://localhost:3000/tasks/${id}`,{
         method:"PUT",
-        headers:{"Content-Type":"application/json"},
+        headers:{"Content-Type":"application.json"},
         body:JSON.stringify(updatedTask)
       })
-      setTasks(tasks.map((task)=>(task.id === id ? updateTask : task)))
+      setTasks(tasks.map((task)=>(task.id === id ? updatedTask : task)))
     } catch (error) {
       console.log(error);      
     }

@@ -9,6 +9,7 @@ const TaskForm = ({ addTask, updateTask, editingTask }) => {
     date: "",
     priority: "",
   });
+  const navigate = useNavigate()
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -49,12 +50,13 @@ const TaskForm = ({ addTask, updateTask, editingTask }) => {
     e.preventDefault();
     if (validate()) {
       if (editingTask) {
-        updateTask(taskData);
+        updateTask({...taskData,id:editingTask.id});        
       } else {
         addTask(taskData);
       }
       //localStorage.setItem("taskData", JSON.stringify(taskData));
       //alert("task are added");
+      navigate("/dashboard");
     }
   };
 
